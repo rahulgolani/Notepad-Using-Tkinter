@@ -1,5 +1,6 @@
 #------------------------IMPORTS------------------------------------
 from tkinter import *
+import tkinter.font as tkFont
 import tkinter.messagebox as tmsg
 from tkinter.filedialog import askopenfilename,asksaveasfilename
 import os
@@ -172,7 +173,88 @@ def wrapText():
     #TextArea.pack(expand=True,fill=BOTH)
 
 def setFont():
-    pass
+
+
+    #print(tkFont.families())
+    #for i in tkFont.families():
+    #    print(i)
+    win=Toplevel()
+    win_width=550
+    win_height=300
+    win.geometry(f"{win_width}x{win_height}")
+    win.resizable(width=False,height=False)
+    win.title("Font")
+
+    frame0=Frame(win)
+
+    Label(frame0,text="Font Face",font=("comicsans",13, "bold"),fg="black").pack(side=LEFT,padx="40",pady="10")
+    Label(frame0,text="Font Style",font=("comicsans",13, "bold"),fg="black").pack(side=LEFT,padx="50",pady="10")
+    Label(frame0,text="Font Size",font=("comicsans",13, "bold"),fg="black").pack(side=LEFT,padx="40",pady="10")
+
+    frame0.pack(anchor="w")
+
+    frame1=Frame(win)
+
+    global fontFace,fontSize,fontStyle
+    fontFace=Listbox(frame1,borderwidth="4",selectmode=SINGLE)
+    fontFace.pack(side=LEFT,fill=Y,padx="2",pady="20")
+
+    for i in tkFont.families():
+        fontFace.insert(END,f"{i}")
+
+    #fontFace.insert(END,"First Item")
+    #fontFace.insert(ACTIVE,"Second Item")
+
+    scrollBarFont=Scrollbar(frame1,cursor="arrow",orient=VERTICAL)
+    scrollBarFont.config(command=fontFace.yview)
+    fontFace.config(yscrollcommand=scrollBarFont.set)
+    scrollBarFont.pack(side=LEFT,fill=Y,pady="20")
+
+    frame1.pack(anchor="w")
+
+    fontStyle=Listbox(frame1,borderwidth="4",selectmode=SINGLE)
+    fontStyle.pack(side=LEFT,fill=Y,pady="20")
+
+    fontStyle.insert(END,"Regular")
+    fontStyle.insert(END,"Bold")
+    fontStyle.insert(END,"Italic")
+    fontStyle.insert(END,"Bold Italic")
+    fontStyle.pack(side=LEFT,padx="50")
+
+    '''
+    scrollBarStyle=Scrollbar(frame1,cursor="arrow",orient=VERTICAL)
+    scrollBarStyle.pack(side=RIGHT,fill=Y,pady="20",padx="20")
+    scrollBarStyle.config(command=fontStyle.yview)
+    fontStyle.config(yscrollcommand=scrollBarStyle.set)
+    '''
+
+    fontSize=Listbox(frame1,borderwidth="4",selectmode=SINGLE)
+    fontSize.pack(side=LEFT,fill=Y,pady="20")
+
+    for i in range(1,101):
+        fontSize.insert(END,f"{i}")
+
+    scrollBarSize=Scrollbar(frame1,cursor="arrow",orient=VERTICAL)
+    scrollBarSize.pack(side=LEFT,fill=Y,pady="20")
+    scrollBarSize.config(command=fontSize.yview)
+    fontSize.config(yscrollcommand=scrollBarSize.set)
+
+    frame1.pack(anchor="w")
+
+    frame3=Frame(win)
+    button=Button(win,text="Apply Changes",width="15",height="1",borderwidth="2",command=setFontValues)
+    button.config(anchor=CENTER,pady=5)
+    button.pack()
+    frame3.pack()
+
+def setFontValues():
+
+
+    fontFaceValue=fontFace.get()
+    fontStyleValue=fontStyle.get()
+    fontSizeValue=fontSize.get()
+
+    print(fontFaceValue,fontStyleValue,fontSizeValue)
 
 root=Tk()
 #application will open as Untitled.txt
