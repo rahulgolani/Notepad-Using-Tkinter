@@ -103,6 +103,7 @@ def details():
     tmsg.showinfo("About Notepad Application",message=message)
 
 def setValues():
+
     global new_Width, new_Height
     #print(f"{new_Width.get()},{new_Height.get()}")
     #print(new_Width.get())
@@ -151,7 +152,20 @@ def resizeWindow():
     button.pack()
 
 
-
+def wrapText():
+    global twrap,data
+    print(twrap.get())
+    #print(twrap.get())
+    if twrap.get():
+        TextArea.config(wrap=CHAR)
+        TextArea.update()
+    else:
+        #data=TextArea.get(1.0,END)
+        #TextArea.delete(1.0,END)
+        TextArea.config(wrap="none")
+        #TextArea.insert(1.0,data)
+        TextArea.update()
+    #TextArea.pack(expand=True,fill=BOTH)
 
 def setFont():
     pass
@@ -161,11 +175,12 @@ root=Tk()
 root.title("Untitled-Notepad")
 root.wm_iconbitmap("Tatice-Cristal-Intense-Notepad-Bloc-notes-2.ico")
 width=644
-height=788
+height=400
 root.geometry(f"{width}x{height}")
 file=None
 #Initial font Configurations
 TextArea=Text(root,font=("Consolas 14"))
+TextArea.config(wrap="none")
 TextArea.pack(expand=True,fill=BOTH)
 #expand takes the size of the window an fill enables to stretch across both axis
 
@@ -197,8 +212,11 @@ menuBar.add_cascade(label="Format",menu=formatMenu)
 root.config(menu=menuBar)
 
 #View Menu
+global twrap
+twrap=BooleanVar()
 viewMenu=Menu(menuBar,tearoff=0)
 viewMenu.add_command(label="Resize Window",command=resizeWindow)
+viewMenu.add_checkbutton(label="Toggle Wrap",variable=twrap,command=wrapText)
 menuBar.add_cascade(label="View",menu=viewMenu)
 root.config(menu=menuBar)
 
@@ -208,9 +226,16 @@ helpMenu.add_command(label="About",command=details)
 menuBar.add_cascade(label="Help",menu=helpMenu)
 root.config(menu=menuBar)
 
-#ScrollBar configured with TextArea
-scrollBar=Scrollbar(TextArea,cursor="arrow")
+#Y-AXIS ScrollBar configured with TextArea
+scrollBar=Scrollbar(TextArea,cursor="arrow",orient=VERTICAL)
 scrollBar.pack(side=RIGHT,fill=Y)
 scrollBar.config(command=TextArea.yview)
 TextArea.config(yscrollcommand=scrollBar.set)
+
+#X-AXIS ScrollBar configured with TextArea
+scrollBarX=Scrollbar(TextArea,cursor="arrow",orient=HORIZONTAL)
+scrollBarX.pack(side=BOTTOM,fill=X)
+scrollBarX.config(command=TextArea.xview)
+TextArea.config(xscrollcommand=scrollBarX.set)
+
 root.mainloop()
