@@ -44,7 +44,7 @@ def saveFile():
         f=open(file,"w")
         f.write(TextArea.get(1.0,END))
         f.close()
-        
+
 
 def saveAsFile():
     '''
@@ -102,6 +102,49 @@ def details():
     message="This notepad application is made using Tkinter module of python"
     tmsg.showinfo("About Notepad Application",message=message)
 
+def setValues():
+    global new_Width, new_Height
+    #print(f"{new_Width.get()},{new_Height.get()}")
+    #print(new_Width.get())
+    #print(new_Height.get())
+    root.geometry(f"{new_Width.get()}x{new_Height.get()}")
+
+def resizeWindow():
+    global new_Width,new_Height
+    new_Width=StringVar()
+    new_Height=StringVar()
+    win=Toplevel()
+    win_width=425
+    win_height=200
+    win.title("Resize Window")
+    win.geometry(f"{win_width}x{win_height}")
+    win.minsize(410,200)
+    #win.maxsize(700,700)
+
+    frame1=Frame(win)
+    label=Label(frame1,text="Enter the Width and Height values",font=("Consolas 14 bold"))
+    label.config(anchor=CENTER)
+    label.pack(fill=BOTH)
+    #label.grid(row=0,column=6)
+    frame1.pack()
+
+    frame2=Frame(win)
+    Label(frame2,text="Enter Width",pady=20,padx=5).pack(side=LEFT)
+    width_value=Entry(frame2,text="Enter Width",textvariable=new_Width)
+    width_value.pack(side=LEFT,pady=20)
+    Label(frame2,text="Enter Height",pady=20,padx=5).pack(side=LEFT)
+    height_value=Entry(frame2,text="Enter Height",textvariable=new_Height)
+    height_value.pack(side=LEFT,pady=20)
+    frame2.pack()
+
+    frame3=Frame(win)
+    button=Button(win,text="Set",width="10",height="1",command=setValues)
+    button.config(anchor=CENTER,pady=5)
+    button.pack()
+
+
+
+
 def setFont():
     pass
 
@@ -129,6 +172,7 @@ fileMenu.add_command(label="Save As",command=saveAsFile)
 fileMenu.add_separator()
 fileMenu.add_command(label="Exit",command=quitApp)
 menuBar.add_cascade(label="File",menu=fileMenu)
+root.config(menu=menuBar)
 
 #Edit Menu
 editMenu=Menu(menuBar,tearoff=0)
@@ -142,6 +186,13 @@ root.config(menu=menuBar)
 formatMenu=Menu(menuBar,tearoff=0)
 formatMenu.add_command(label="Font",command=setFont)
 menuBar.add_cascade(label="Format",menu=formatMenu)
+root.config(menu=menuBar)
+
+#View Menu
+viewMenu=Menu(menuBar,tearoff=0)
+viewMenu.add_command(label="Resize Window",command=resizeWindow)
+menuBar.add_cascade(label="View",menu=viewMenu)
+root.config(menu=menuBar)
 
 #Help Menu
 helpMenu=Menu(menuBar,tearoff=0)
