@@ -109,6 +109,7 @@ def setValues():
     #print(new_Width.get())
     #print(new_Height.get())
     root.geometry(f"{new_Width.get()}x{new_Height.get()}")
+    win.destroy()
 
 def resizeWindow():
 
@@ -117,6 +118,7 @@ def resizeWindow():
     new_Width=StringVar()
     new_Height=StringVar()
     #creating a new window
+    global win
     win=Toplevel()
     win_width=425
     win_height=200
@@ -175,7 +177,7 @@ root=Tk()
 root.title("Untitled-Notepad")
 root.wm_iconbitmap("Tatice-Cristal-Intense-Notepad-Bloc-notes-2.ico")
 width=644
-height=400
+height=788
 root.geometry(f"{width}x{height}")
 file=None
 #Initial font Configurations
