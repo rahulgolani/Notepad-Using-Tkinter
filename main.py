@@ -79,7 +79,6 @@ def cutText():
     '''
     Tkinters builtin event CUT
     '''
-
     TextArea.event_generate(("<<Cut>>"))
 
 def copyText():
@@ -112,6 +111,9 @@ def setValues():
     win.destroy()
 
 def resizeWindow():
+    '''
+    Resizes the window as per the width and height values given by the user
+    '''
 
     global new_Width,new_Height
     #variables to store the value of new Width and Height
