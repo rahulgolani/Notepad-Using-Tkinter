@@ -37,6 +37,16 @@ def openFile():
         text.close()
 
 def saveFile():
+    global file
+    if file is None:
+        saveAsFile()
+    else:
+        f=open(file,"w")
+        f.write(TextArea.get(1.0,END))
+        f.close()
+        
+
+def saveAsFile():
     '''
     Saves the file
     '''
@@ -115,6 +125,7 @@ fileMenu=Menu(menuBar,tearoff=0)
 fileMenu.add_command(label="New File",command=newFile)
 fileMenu.add_command(label="Open File",command=openFile)
 fileMenu.add_command(label="Save",command=saveFile)
+fileMenu.add_command(label="Save As",command=saveAsFile)
 fileMenu.add_separator()
 fileMenu.add_command(label="Exit",command=quitApp)
 menuBar.add_cascade(label="File",menu=fileMenu)
