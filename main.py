@@ -110,14 +110,18 @@ def setValues():
     root.geometry(f"{new_Width.get()}x{new_Height.get()}")
 
 def resizeWindow():
+
     global new_Width,new_Height
+    #variables to store the value of new Width and Height
     new_Width=StringVar()
     new_Height=StringVar()
+    #creating a new window
     win=Toplevel()
     win_width=425
     win_height=200
     win.title("Resize Window")
     win.geometry(f"{win_width}x{win_height}")
+    #limiting windowsize to 410x200
     win.minsize(410,200)
     #win.maxsize(700,700)
 
@@ -129,10 +133,14 @@ def resizeWindow():
     frame1.pack()
 
     frame2=Frame(win)
+
     Label(frame2,text="Enter Width",pady=20,padx=5).pack(side=LEFT)
+    #Width Box
     width_value=Entry(frame2,text="Enter Width",textvariable=new_Width)
     width_value.pack(side=LEFT,pady=20)
+
     Label(frame2,text="Enter Height",pady=20,padx=5).pack(side=LEFT)
+    #Height Box
     height_value=Entry(frame2,text="Enter Height",textvariable=new_Height)
     height_value.pack(side=LEFT,pady=20)
     frame2.pack()
