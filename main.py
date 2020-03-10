@@ -172,8 +172,56 @@ def wrapText():
         TextArea.update()
     #TextArea.pack(expand=True,fill=BOTH)
 
-def setFont():
+def fontFaceValueSelect(event):
+    global fontface_value
+    fontface_value="Consolas"
+    '''
+    widget = event.widget
+    selection=widget.curselection()
+    picked = widget.get(selection[0])
+    print(picked)
+    value=fontFace.get(ANCHOR)
+    value=fontFace.get(fontFace.curselection())
+    '''
+    index=fontFace.curselection()[0]
+    fontface_value=fontFace.get(index)
+    print(fontface_value)
 
+def fontStyleValueSelect(event):
+    global fontstyle_value
+    fontstyle_value="Regular"
+    '''
+    widget = event.widget
+    selection=widget.curselection()
+    picked = widget.get(selection[0])
+    print(picked)
+    value1=fontStyle.get(ANCHOR)
+    value1=fontStyle.get(fontStyle.curselection())
+    print(value1)
+    '''
+    index=fontStyle.curselection()[0]
+    fontstyle_value=fontStyle.get(index)
+    print(fontstyle_value)
+
+
+def fontSizeValueSelect(event):
+    global fontsize_value
+    fontsize_value=14
+    '''
+    widget = event.widget
+    selection=widget.curselection()
+    picked = widget.get(ANCHOR)
+    print(picked)
+    value=fontSize.get(ANCHOR)
+    value=fontSize.get(fontSize.curselection())
+    print(value)
+    '''
+    index=fontSize.curselection()[0]
+    fontsize_value=fontSize.get(index)
+    print(fontsize_value)
+
+
+def setFont():
 
     #print(tkFont.families())
     #for i in tkFont.families():
@@ -196,8 +244,10 @@ def setFont():
     frame1=Frame(win)
 
     global fontFace,fontSize,fontStyle
-    fontFace=Listbox(frame1,borderwidth="4",selectmode=SINGLE)
+
+    fontFace=Listbox(frame1,borderwidth="4",selectmode=SINGLE,exportselection=0)
     fontFace.pack(side=LEFT,fill=Y,padx="2",pady="20")
+    fontFace.bind("<<ListboxSelect>>",fontFaceValueSelect)
 
     for i in tkFont.families():
         fontFace.insert(END,f"{i}")
@@ -212,13 +262,15 @@ def setFont():
 
     frame1.pack(anchor="w")
 
-    fontStyle=Listbox(frame1,borderwidth="4",selectmode=SINGLE)
-    fontStyle.pack(side=LEFT,fill=Y,pady="20")
 
-    fontStyle.insert(END,"Regular")
-    fontStyle.insert(END,"Bold")
-    fontStyle.insert(END,"Italic")
-    fontStyle.insert(END,"Bold Italic")
+    fontStyle=Listbox(frame1,borderwidth="4",selectmode=SINGLE,exportselection=0)
+    fontStyle.pack(side=LEFT,fill=Y,pady="20")
+    fontStyle.bind("<<ListboxSelect>>",fontStyleValueSelect)
+
+    fontStyle.insert(END,"normal")
+    fontStyle.insert(END,"bold")
+    fontStyle.insert(END,"italic")
+    fontStyle.insert(END,"bold italic")
     fontStyle.pack(side=LEFT,padx="50")
 
     '''
@@ -228,11 +280,12 @@ def setFont():
     fontStyle.config(yscrollcommand=scrollBarStyle.set)
     '''
 
-    fontSize=Listbox(frame1,borderwidth="4",selectmode=SINGLE)
+    fontSize=Listbox(frame1,borderwidth="4",selectmode=SINGLE,exportselection=0)
     fontSize.pack(side=LEFT,fill=Y,pady="20")
+    fontSize.bind("<<ListboxSelect>>",fontSizeValueSelect)
 
     for i in range(1,101):
-        fontSize.insert(END,f"{i}")
+        fontSize.insert(END,str(i))
 
     scrollBarSize=Scrollbar(frame1,cursor="arrow",orient=VERTICAL)
     scrollBarSize.pack(side=LEFT,fill=Y,pady="20")
@@ -248,13 +301,18 @@ def setFont():
     frame3.pack()
 
 def setFontValues():
+    values=[fontface_value,fontstyle_value,fontsize_value]
 
 
-    fontFaceValue=fontFace.get()
-    fontStyleValue=fontStyle.get()
-    fontSizeValue=fontSize.get()
+    print(f"({fontface_value} {fontsize_value} {fontstyle_value} )")
+    if fontstyle_value=="italic":
+        TextArea.configure(font=tkFont.Font(family=fontface_value,size=fontsize_value,slant=fontstyle_value))
+    elif fontstyle_value=="bold italic":
+        TextArea.configure(font=tkFont.Font(family=fontface_value,size=fontsize_value,weight=fontstyle_value.split()[0],slant=fontstyle_value.split()[1]))
+    else:
+        TextArea.configure(font=tkFont.Font(family=fontface_value,size=fontsize_value,weight=fontstyle_value))
+    TextArea.update()
 
-    print(fontFaceValue,fontStyleValue,fontSizeValue)
 
 root=Tk()
 #application will open as Untitled.txt
