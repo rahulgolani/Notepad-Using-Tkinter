@@ -5,6 +5,7 @@ import tkinter.messagebox as tmsg
 from tkinter.filedialog import askopenfilename,asksaveasfilename
 import os
 
+
 #----------------------Functions--------------------------------------
 def newFile():
     '''
@@ -172,9 +173,18 @@ def wrapText():
         TextArea.update()
     #TextArea.pack(expand=True,fill=BOTH)
 
+#----------------------global font variable------------------------------
+
+fontface_value="Consolas"
+fontsize_value=14
+fontstyle_value="normal"
+
+#-------------------------------------------------------------------------
+
 def fontFaceValueSelect(event):
     global fontface_value
-    fontface_value="Consolas"
+    #fontface_value="Consolas"
+    #print(fontsize_value)
     '''
     widget = event.widget
     selection=widget.curselection()
@@ -189,7 +199,8 @@ def fontFaceValueSelect(event):
 
 def fontStyleValueSelect(event):
     global fontstyle_value
-    fontstyle_value="Regular"
+    #fontstyle_value="Regular"
+
     '''
     widget = event.widget
     selection=widget.curselection()
@@ -206,7 +217,7 @@ def fontStyleValueSelect(event):
 
 def fontSizeValueSelect(event):
     global fontsize_value
-    fontsize_value=14
+    #fontsize_value=14
     '''
     widget = event.widget
     selection=widget.curselection()
@@ -249,9 +260,16 @@ def setFont():
     fontFace=Listbox(frame1,borderwidth="4",selectmode=SINGLE,exportselection=0)
     fontFace.pack(side=LEFT,fill=Y,padx="2",pady="20")
     fontFace.bind("<<ListboxSelect>>",fontFaceValueSelect)
-
+    value=0
     for i in tkFont.families():
+        '''
+        if i=="Consolas":
+            print(value)
+        else:
+            value+=1
+        '''
         fontFace.insert(END,f"{i}")
+    fontFace.select_set(38)
 
     #fontFace.insert(END,"First Item")
     #fontFace.insert(ACTIVE,"Second Item")
@@ -273,6 +291,7 @@ def setFont():
     fontStyle.insert(END,"italic")
     fontStyle.insert(END,"bold italic")
     fontStyle.pack(side=LEFT,padx="50")
+    fontStyle.select_set(0)
 
     '''
     scrollBarStyle=Scrollbar(frame1,cursor="arrow",orient=VERTICAL)
@@ -292,6 +311,7 @@ def setFont():
     scrollBarSize.pack(side=LEFT,fill=Y,pady="20")
     scrollBarSize.config(command=fontSize.yview)
     fontSize.config(yscrollcommand=scrollBarSize.set)
+    fontSize.select_set(15)
 
     frame1.pack(anchor="w")
 
@@ -302,8 +322,8 @@ def setFont():
     frame3.pack()
 
 def setFontValues():
-    values=[fontface_value,fontstyle_value,fontsize_value]
-
+    #values=[fontface_value,fontstyle_value,fontsize_value]
+    #global fontface_value,fontstyle_value,fontsize_value
 
     print(f"({fontface_value} {fontsize_value} {fontstyle_value} )")
     if fontstyle_value=="italic":
