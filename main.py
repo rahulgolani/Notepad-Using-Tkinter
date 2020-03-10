@@ -223,6 +223,7 @@ def fontSizeValueSelect(event):
 
 def setFont():
 
+    global win
     #print(tkFont.families())
     #for i in tkFont.families():
     #    print(i)
@@ -312,6 +313,7 @@ def setFontValues():
     else:
         TextArea.configure(font=tkFont.Font(family=fontface_value,size=fontsize_value,weight=fontstyle_value))
     TextArea.update()
+    win.destroy()
 
 
 root=Tk()
